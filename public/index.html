@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>EVE</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="bootFail" class="boot-fail">
+    EVE não carregou. Rode <code>npm start</code> de novo.
+  </div>
+
+  <div class="shell" id="eve-stage">
+    <div class="atmosphere" aria-hidden="true"></div>
+
+    <header class="top">
+      <div class="brand">
+        <h1>EVE</h1>
+        <span class="brand-sub">agente no seu PC</span>
+      </div>
+      <div class="actions">
+        <button id="cfgBtn" type="button" class="icon-btn" title="Configurações" aria-label="Configurações">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.1 7.1 0 0 0-1.63-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54c-.59.24-1.13.55-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.71 8.84a.5.5 0 0 0 .12.64l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94L2.83 14.5a.5.5 0 0 0-.12.64l1.92 3.32c.13.23.4.32.64.22l2.39-.96c.5.39 1.04.7 1.63.94l.36 2.54c.05.24.26.42.5.42h3.84c.24 0 .45-.18.5-.42l.36-2.54c.59-.24 1.13-.55 1.63-.94l2.39.96c.24.1.51 0 .64-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58ZM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="stage">
+        <div id="robot" class="robot mood-wave" aria-label="EVE">
+          <img id="animImg" class="anim-img" src="/eve/wave.svg" alt="EVE" />
+        </div>
+        <p id="bubble" class="bubble">Olá. Eu sou a EVE.</p>
+      </section>
+
+      <aside class="chat-panel">
+        <div class="chat-head">
+          <h2>Conversa</h2>
+        </div>
+        <div id="transcript" class="chat-stream"></div>
+      </aside>
+    </main>
+
+    <form id="composer" class="composer">
+      <div class="composer-shell">
+        <button id="mic" type="button" class="mic-btn" title="Falar" aria-label="Microfone" aria-pressed="false">
+          <svg class="mic-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v5a3 3 0 0 0 3 3Zm5-3a1 1 0 1 0-2 0 3 3 0 0 1-6 0 1 1 0 1 0-2 0 5 5 0 0 0 4 4.9V18H9a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-2v-2.1A5 5 0 0 0 17 11Z"/></svg>
+          <span class="mic-waves" aria-hidden="true"><i></i><i></i><i></i></span>
+        </button>
+        <input id="input" name="text" autocomplete="off" placeholder="Mensagem para a EVE…" />
+        <button type="submit" class="send-btn" title="Enviar" aria-label="Enviar">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3.4 20.6 21 12 3.4 3.4l-.1 6.7L14 12 3.3 13.9z"/></svg>
+        </button>
+      </div>
+      <p id="micHint" class="mic-hint" hidden></p>
+    </form>
+  </div>
+
+  <div id="cfg" class="overlay" hidden>
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="cfgTitle">
+      <div class="sheet-glow" aria-hidden="true"></div>
+      <header class="sheet-head">
+        <div>
+          <p class="sheet-kicker">EVE</p>
+          <h2 id="cfgTitle">Configurações</h2>
+        </div>
+        <button id="cfgClose" type="button" class="icon-btn" aria-label="Fechar">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M6.4 6.4 12 12l5.6-5.6 1.4 1.4L13.4 13.4l5.6 5.6-1.4 1.4L12 14.8l-5.6 5.6-1.4-1.4 5.6-5.6L5 7.8z"/></svg>
+        </button>
+      </header>
+
+      <nav class="tabs" role="tablist">
+        <button type="button" class="tab active" data-tab="audio" role="tab">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Zm-7 8a1 1 0 1 1 2 0 5 5 0 0 0 10 0 1 1 0 1 1 2 0 7 7 0 0 1-6 6.9V21a1 1 0 1 1-2 0v-3.1A7 7 0 0 1 5 11Z"/></svg>
+          Áudio
+        </button>
+        <button type="button" class="tab" data-tab="conexoes" role="tab">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 6a4 4 0 0 1 7.9 1H20v2h-4.1A4 4 0 0 1 8 10.9V13H4v-2h4V8.9A4 4 0 0 1 8 6Zm4-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm4 10a4 4 0 0 1 3.9 3H22v2h-2.1A4 4 0 1 1 16 14Zm0 2a2 2 0 1 0 .01 4.01A2 2 0 0 0 16 16Z"/></svg>
+          Conexões
+        </button>
+        <button type="button" class="tab" data-tab="sobre" role="tab">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 0 .01 20.01A10 10 0 0 0 12 2Zm1 15h-2v-2h2v2Zm0-4h-2V7h2v6Z"/></svg>
+          Sobre
+        </button>
+      </nav>
+
+      <div id="tab-audio" class="pane active" role="tabpanel">
+        <p class="demo">Toque no mic, fale (fica verde), toque de novo. O texto aparece e a EVE responde por voz. Digitando = só texto, sem voz.</p>
+
+        <div class="soft">
+          <label class="field">
+            <span class="field-label"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v5a3 3 0 0 0 3 3Z"/></svg> Entrada</span>
+            <span class="field-help">Microfone que a EVE usa para te ouvir.</span>
+            <select id="audioIn"></select>
+          </label>
+          <label class="field">
+            <span class="field-label"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 10v4h4l5 5V5L7 10H3Zm13.5 2a3.5 3.5 0 0 0-1.8-3.1v6.2A3.5 3.5 0 0 0 16.5 12Z"/></svg> Saída</span>
+            <span class="field-help">Alto-falante / fone onde a voz dela toca (quando o app controla áudio).</span>
+            <select id="audioOut"></select>
+          </label>
+          <label class="field">
+            <span class="field-label"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M3 13h2v-2H3v2Zm4 4h2v-6H7v6Zm4 3h2V8h-2v12Zm4-7h2V9h-2v4Zm4-5h2V4h-2v4Z"/></svg> Volume do mic</span>
+            <span class="field-help">Amplificação da sua voz (100% = máximo).</span>
+            <input id="micGain" type="range" min="50" max="100" step="5" value="100" />
+            <em id="micGainVal">100%</em>
+          </label>
+        </div>
+
+        <div class="soft toggles">
+          <label class="switch">
+            <input id="noiseOn" type="checkbox" checked />
+            <span><b>Reduzir ruído</b><small>Corta fundo (ventilador, teclado). Deixe ligado.</small></span>
+          </label>
+          <label class="switch">
+            <input id="echoOn" type="checkbox" checked />
+            <span><b>Cancelar eco</b><small>Evita que a voz dela entre de novo no mic.</small></span>
+          </label>
+          <label class="switch">
+            <input id="agcOn" type="checkbox" checked />
+            <span><b>Ganho automático</b><small>Equaliza volume se você fala baixo/alto.</small></span>
+          </label>
+        </div>
+
+        <div class="meter-row">
+          <div class="meter"><i id="micLevel"></i></div>
+          <button type="button" id="audioTest" class="pill-btn">Testar mic</button>
+        </div>
+      </div>
+
+      <div id="tab-conexoes" class="pane" role="tabpanel" hidden>
+        <p class="demo">Como o Cursor: clique em <b>Conectar</b> e confirme no navegador. Nada para colar.</p>
+        <p id="connHint" class="mic-hint" hidden></p>
+
+        <div class="conn-list">
+          <article class="conn">
+            <div class="conn-ico cursor">C</div>
+            <div class="conn-body">
+              <h3>Cursor</h3>
+              <p>Mãos no PC — login oficial.</p>
+              <div class="conn-row">
+                <span id="cursorState" class="pill off">offline</span>
+                <span id="userEmail" class="user-mail" hidden></span>
+                <button type="button" class="pill-btn primary conn-btn" data-provider="cursor">Conectar</button>
+                <button type="button" class="pill-btn api-btn" data-provider="cursor">API</button>
+                <button type="button" class="pill-btn details-btn" data-provider="cursor">Detalhes</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="conn">
+            <div class="conn-ico github">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.4-1-1-1.3-1-1.3-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5a3.9 3.9 0 0 1 1-2.7c-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c2-1.3 2.8-1 2.8-1 .6 1.4.2 2.4.1 2.7a3.9 3.9 0 0 1 1 2.7c0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.8v2.6c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg>
+            </div>
+            <div class="conn-body">
+              <h3>GitHub</h3>
+              <p>Login web do <code>gh</code> — só conecta após verificar.</p>
+              <div class="conn-row">
+                <span id="ghState" class="pill off">offline</span>
+                <button type="button" class="pill-btn primary conn-btn" data-provider="github">Conectar</button>
+                <button type="button" class="pill-btn api-btn" data-provider="github">API</button>
+                <button type="button" class="pill-btn details-btn" data-provider="github">Detalhes</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="conn">
+            <div class="conn-ico claude">✦</div>
+            <div class="conn-body">
+              <h3>Claude</h3>
+              <p>Auth Bearer/x-api-key · GET /v1/models (env, .env ou API).</p>
+              <div class="conn-row">
+                <span id="claudeState" class="pill off">off</span>
+                <button type="button" class="pill-btn primary conn-btn" data-provider="claude">Conectar</button>
+                <button type="button" class="pill-btn api-btn" data-provider="claude">API</button>
+                <button type="button" class="pill-btn details-btn" data-provider="claude">Detalhes</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="conn">
+            <div class="conn-ico openai">◉</div>
+            <div class="conn-body">
+              <h3>ChatGPT</h3>
+              <p>Auth Bearer · GET /v1/models (env, .env ou API).</p>
+              <div class="conn-row">
+                <span id="gptState" class="pill off">off</span>
+                <button type="button" class="pill-btn primary conn-btn" data-provider="chatgpt">Conectar</button>
+                <button type="button" class="pill-btn api-btn" data-provider="chatgpt">API</button>
+                <button type="button" class="pill-btn details-btn" data-provider="chatgpt">Detalhes</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="conn">
+            <div class="conn-ico ig">IG</div>
+            <div class="conn-body">
+              <h3>Instagram</h3>
+              <p>Login no browser + skills ig-* (não usa API).</p>
+              <div class="conn-row">
+                <span id="igState" class="pill off">off</span>
+                <button type="button" class="pill-btn primary conn-btn" data-provider="instagram">Conectar</button>
+                <button type="button" class="pill-btn details-btn" data-provider="instagram">Detalhes</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="conn">
+            <div class="conn-ico tt">TT</div>
+            <div class="conn-body">
+              <h3>TikTok</h3>
+              <p>Login no browser para contexto (não usa API).</p>
+              <div class="conn-row">
+                <span id="ttState" class="pill off">off</span>
+                <button type="button" class="pill-btn primary conn-btn" data-provider="tiktok">Conectar</button>
+                <button type="button" class="pill-btn details-btn" data-provider="tiktok">Detalhes</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div id="tab-sobre" class="pane" role="tabpanel" hidden>
+        <div class="about soft">
+          <div class="about-mark">EVE</div>
+          <p>Agente pessoal open-source no seu PC. Voz e ações locais.</p>
+          <div class="about-links">
+            <a class="pill-btn" href="https://github.com/oftcer" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.4-1-1-1.3-1-1.3-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5a3.9 3.9 0 0 1 1-2.7c-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c2-1.3 2.8-1 2.8-1 .6 1.4.2 2.4.1 2.7a3.9 3.9 0 0 1 1 2.7c0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.8v2.6c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg>
+              GitHub · oftcer
+            </a>
+            <a class="pill-btn" href="https://instagram.com/oftcer" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm10 2H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3Zm-5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5Zm5.25-3.75a1 1 0 1 1-1 1 1 1 0 0 1 1-1Z"/></svg>
+              Instagram · oftcer
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <footer class="sheet-foot">
+        <button id="cfgCancel" type="button" class="pill-btn">Cancelar</button>
+        <button id="cfgSave" type="button" class="pill-btn primary">Salvar</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="apiModal" class="overlay" hidden>
+    <div class="sheet" role="dialog" aria-modal="true">
+      <header class="sheet-head">
+        <div>
+          <p class="sheet-kicker" id="apiProviderLabel">API</p>
+          <h2 id="apiTitle">Parâmetros</h2>
+        </div>
+        <button type="button" class="icon-btn" id="apiClose" aria-label="Fechar">✕</button>
+      </header>
+      <p class="demo" id="apiDemo">Cole a key e valide de verdade contra a API.</p>
+      <div class="soft api-params" id="apiParams">
+        <label class="field">
+          <span class="field-label">Base URL</span>
+          <input id="apiBaseUrl" type="text" autocomplete="off" spellcheck="false" />
+        </label>
+        <label class="field">
+          <span class="field-label">Auth header</span>
+          <input id="apiAuthHeader" type="text" readonly />
+        </label>
+        <label class="field">
+          <span class="field-label">Modelo</span>
+          <input id="apiModel" type="text" autocomplete="off" spellcheck="false" />
+        </label>
+        <label class="field">
+          <span class="field-label" id="apiKeyLabel">API Key</span>
+          <input id="apiKeyInput" type="password" placeholder="cole a key" autocomplete="off" />
+        </label>
+        <div class="api-meta" id="apiMeta"></div>
+        <label class="field">
+          <span class="field-label">Script de teste</span>
+          <textarea id="apiScript" class="api-script" readonly rows="7" spellcheck="false"></textarea>
+        </label>
+        <p id="apiStatus" class="mic-hint" hidden></p>
+      </div>
+      <footer class="sheet-foot">
+        <button type="button" class="pill-btn" id="apiCancel">Cancelar</button>
+        <button type="button" class="pill-btn primary" id="apiApply">Validar e salvar</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="detailsModal" class="overlay" hidden>
+    <div class="sheet" role="dialog" aria-modal="true">
+      <header class="sheet-head">
+        <div>
+          <p class="sheet-kicker">LOGS</p>
+          <h2 id="detailsTitle">Detalhes</h2>
+        </div>
+        <button type="button" class="icon-btn" id="detailsClose" aria-label="Fechar">✕</button>
+      </header>
+      <p class="demo">Logs de requisições (GET/POST), status HTTP, erros de API e conexões.</p>
+      <div id="detailsList" class="log-list"></div>
+      <footer class="sheet-foot">
+        <button type="button" class="pill-btn" id="detailsRefresh">Atualizar</button>
+        <button type="button" class="pill-btn primary" id="detailsDone">Fechar</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="/voice-mic.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

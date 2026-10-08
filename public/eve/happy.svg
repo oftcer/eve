@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" fill="none">
+  <defs>
+    <radialGradient id="b" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#f4f7ff"/><stop offset="100%" stop-color="#b5c6e4"/></radialGradient>
+    <radialGradient id="h" cx="45%" cy="35%" r="65%"><stop offset="0%" stop-color="#f7faff"/><stop offset="100%" stop-color="#b7cdea"/></radialGradient>
+    <filter id="g"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <ellipse cx="160" cy="372" rx="78" ry="12" fill="rgba(0,0,0,.45)"/>
+  <path d="M78 230 C40 250 28 310 48 340" stroke="url(#b)" stroke-width="28" stroke-linecap="round"/>
+  <path d="M242 230 C280 250 292 310 272 340" stroke="url(#b)" stroke-width="28" stroke-linecap="round"/>
+  <ellipse cx="160" cy="280" rx="92" ry="110" fill="url(#b)"/>
+  <ellipse cx="160" cy="188" rx="48" ry="18" fill="#e8effc"/>
+  <ellipse cx="160" cy="120" rx="108" ry="88" fill="url(#h)"/>
+  <ellipse cx="160" cy="128" rx="78" ry="48" fill="#0d131e"/>
+  <g filter="url(#g)">
+    <ellipse cx="128" cy="128" rx="22" ry="16" fill="#04e9d7"><animate attributeName="ry" values="16;12;16" dur="1.2s" repeatCount="indefinite"/></ellipse>
+    <ellipse cx="192" cy="128" rx="22" ry="16" fill="#04e9d7"><animate attributeName="ry" values="16;12;16" dur="1.2s" repeatCount="indefinite"/></ellipse>
+  </g>
+  <text x="160" y="300" text-anchor="middle" fill="#4a5568" font-size="18" font-weight="700" letter-spacing="6" font-family="Segoe UI,sans-serif">EVE</text>
+</svg>

@@ -1,0 +1,25 @@
+node_modules/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
+.tmp-shot.png
+.tmp/
+dist/
+coverage/
+*.tgz
+.npm/
+.walle-local/
+.eve-local/
+
+# IDE / Cursor local (skills pessoais, cache)
+.cursor/
+
+# upstream clone com .git aninhado (não publicar)
+skills/_instagram-upstream/
+
+# áudio/debug local
+*.wav
+last.wav

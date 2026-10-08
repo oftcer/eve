@@ -1,0 +1,17 @@
+node_modules/
+.env
+.env.*
+.git/
+.github/
+.cursor/
+*.log
+*.tgz
+.tmp*
+.tmp/
+coverage/
+.walle-local/
+.eve-local/
+agent-transcripts/
+skills/_instagram-upstream/
+docs/
+*.wav

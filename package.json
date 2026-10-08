@@ -1,0 +1,49 @@
+{
+  "name": "@eve/code",
+  "version": "1.0.0",
+  "description": "EVE — open-source CLI agent for your PC.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Oftcer",
+  "bin": {
+    "eve": "bin/code.js"
+  },
+  "main": "bin/code.js",
+  "files": [
+    "bin",
+    "src",
+    "public",
+    "desktop",
+    "skills",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node bin/code.js",
+    "desktop": "electron desktop/main.cjs",
+    "check": "node bin/code.js --check",
+    "prepack": "node bin/code.js --check",
+    "link:local": "npm link",
+    "publish:public": "node scripts/publish.mjs"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@cursor/sdk": "1.0.37",
+    "@xenova/transformers": "^2.17.2",
+    "electron": "^35.2.1"
+  },
+  "keywords": [
+    "eve",
+    "cursor",
+    "agent",
+    "cli",
+    "ai",
+    "open-source",
+    "coding-agent"
+  ]
+}
